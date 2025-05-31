@@ -1,4 +1,4 @@
-# Kriz Portfolio v3
+# Kriz Portfolio v2
 
 Welcome to the source code for **krizxter.ae** – the personal portfolio website of Kriz, a young editor and creator from New Delhi, India.
 

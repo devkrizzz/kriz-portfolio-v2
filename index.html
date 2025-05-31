@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta Tags -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Title -->
+    <title>Krizxter.ae</title>
+
+    <!-- Metadata for SEO and social media embeds -->
+    <meta name="description" content="A really cool portfolio. You should check it out" />
+    <meta name="image" content="https://cdn.discordapp.com/attachments/1177252082332471326/1314998691018440807/OBJNal8.png?ex=6755cf77&is=67547df7&hm=b1d661194258fe7143f64ed60db3fb8df7798ca69d3e141455e4fa99d0af83c6&">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="/assets/images/kriz.png" type="image/x-icon">
+</head>
+<body>
+    <!-- =========================
+         Hero Section
+    ========================== -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-brand">KRIZ</div>
+            <h1 class="hero-title">
+                The Greatest <span class="highlight">Editor</span> that has ever lived?
+            </h1>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <span class="stat-number">2+</span>
+                    <span class="stat-label">Years of Experience</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">20+</span>
+                    <span class="stat-label">Happy Customers and still counting </span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="profile-container">
+                <div class="profile-card">
+                    <img src="assets/images/banner.png" alt="Kriz Profile" class="profile-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+         Intro Section
+    ========================== -->
+    <section class="intro">
+        <div class="container">
+            <h2>About Me</h2>
+            <p>
+                Hi there! I'm Kriz, a 16-year-old creator and student from New Delhi, India. Passionate about editing and coding, I enjoy turning ideas into reality through creativity and technology. Currently, I work as an editor while balancing my studies, working on my skills, and exploring new challenges. Be sure to check out my YouTube channel to see my work!
+            </p>
+        </div>
+    </section>
+
+    <!-- =========================
+         Projects Section
+    ========================== -->
+    <section class="projects">
+        <div class="container">
+            <h2>Featured Projects</h2>
+            <div class="video-slider">
+                <div class="video-track" id="videoTrack">
+                    <!-- Project 1 -->
+                    <div class="video-slide" onclick="openModal(0)">
+                        <div class="video-container">
+                            <iframe
+                                width="100%"
+                                height="100%"
+                                src="https://www.youtube.com/embed/6dOh9ksflkY?si=GR7UpFfWCGj-d77V?autoplay=1&mute=1&loop=1"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="autoplay; encrypted-media"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <!-- Project 2 -->
+                    <div class="video-slide" onclick="openModal(1)">
+                        <div class="video-container">
+                            <iframe
+                                width="100%"
+                                height="100%"
+                                src="https://www.youtube.com/embed/RhKcfWgRFzU?si=GNGADwWpVAWZUeYY?autoplay=1&mute=1&loop=1"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="autoplay; encrypted-media"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                    <!-- Project 3 -->
+                    <div class="video-slide" onclick="openModal(2)">
+                        <div class="video-container">
+                            <iframe
+                                width="100%"
+                                height="100%"
+                                src="https://www.youtube.com/embed/RdFNevYc75M?si=zicy6uGo0fDfPY0U?autoplay=1&mute=1&loop=1"
+                                title="YouTube video player"
+                                frameborder="0"
+                                allow="autoplay; encrypted-media"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slider Controls -->
+                <div class="slider-controls">
+                    <button class="slider-btn" onclick="previousSlide()">‹</button>
+                    <button class="slider-btn" onclick="nextSlide()">›</button>
+                </div>
+                <!-- Slider Dots -->
+                <div class="slider-dots">
+                    <div class="dot active" onclick="goToSlide(0)"></div>
+                    <div class="dot" onclick="goToSlide(1)"></div>
+                    <div class="dot" onclick="goToSlide(2)"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+         Modal for Project Videos
+    ========================== -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal()">×</button>
+            <video class="modal-video" id="modalVideo" controls>
+                <source src="" type="video/mp4">
+            </video>
+            <div class="modal-info">
+                <h3 id="modalTitle"></h3>
+                <p id="modalDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================
+         Working Hours Section
+    ========================== -->
+    <section class="working-hours">
+        <div class="container">
+            <h2>Working Hours</h2>
+            <p class="working-hours-text">
+                My work hours are flexible and depend on my school schedule and other commitments. I usually edit in the evenings after school and on weekends when I have more free time. On average, I spend around 2-3 hours on weekdays and 4-5 hours on weekends. Feel free to reach out to me for any editing projects or collaborations. I'm always open to new opportunities and challenges!
+            </p>
+            <div class="hours-grid">
+                <!-- Weekdays -->
+                <div class="hours-card">
+                    <h3>Weekdays</h3>
+                    <p>Monday - Friday<br>2 - 3 Hours</p>
+                </div>
+                <!-- Weekends -->
+                <div class="hours-card">
+                    <h3>Weekends</h3>
+                    <p>Saturday - Sunday<br>4 - 5 Hours</p>
+                </div>
+                <!-- Emergency -->
+                <div class="hours-card">
+                    <h3>Emergency</h3>
+                    <p>Rush Projects<br>Available 24/7</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+         Contact Section
+    ========================== -->
+    <section class="contact">
+        <div class="container">
+            <h2>GET IN TOUCH</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; max-width: 600px; margin: 0 auto 50px auto; color: rgba(255,255,255,0.8);">
+                If you have any questions, feedback, or just want to say hi, feel free to reach out! You can contact me via email or connect with me on social media. I'm always happy to hear from you and will do my best to respond as soon as possible.
+            </p>
+            <div class="contact-grid">
+                <!-- Location -->
+                <div class="contact-card no-link">
+                    <span class="contact-icon">📍</span>
+                    <h3>Location</h3>
+                    <p>New Delhi, India</p>
+                </div>
+                <!-- Primary Email -->
+                <a href="mailto:krizter@duck.com" class="contact-card">
+                    <span class="contact-icon">📧</span>
+                    <h3>Primary Email</h3>
+                    <p>krizter@duck.com</p>
+                </a>
+                <!-- Secondary Email -->
+                <a href="mailto:contact.krizter@gmail.com" class="contact-card">
+                    <span class="contact-icon">✉️</span>
+                    <h3>Secondary Email</h3>
+                    <p>contact.krizter@gmail.com</p>
+                </a>
+                <!-- Website -->
+                <a href="https://kriz.vercel.app" target="_blank" rel="noopener noreferrer" class="contact-card">
+                    <span class="contact-icon">🌐</span>
+                    <h3>Website</h3>
+                    <p>kriz.vercel.app</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- =========================
+         Footer Section
+    ========================== -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <!-- Footer Left -->
+                <div class="footer-left">
+                    <div class="owner-text">
+                        <span>© 2025 Kriz</span>
+                    </div>
+                    <div class="copyright-text">
+                        All rights reserved
+                    </div>
+                </div>
+                <!-- Footer Center -->
+                <div class="footer-center">
+                    <div class="logo">KRIZ</div>
+                </div>
+                <!-- Footer Right -->
+                <div class="footer-right">
+                    <div class="developer-credit">
+                        <span>Created</span>
+                        <span>by @beastie23 on discord</span>
+                    </div>
+                    <div class="copyright-text">
+                        Website development
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>Built with passion</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =========================
+         Scripts
+    ========================== -->
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

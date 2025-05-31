@@ -1,4 +1,4 @@
- let currentSlide = 0;
+let currentSlide = 0;
         const slides = document.querySelectorAll('.video-slide');
         const totalSlides = slides.length;
         const videoTrack = document.getElementById('videoTrack');
@@ -74,9 +74,6 @@
             event.target.reset();
         }
 
-        // Auto-slide functionality
-        setInterval(nextSlide, 8000);
-
         // Close modal when clicking outside
         document.getElementById('videoModal').addEventListener('click', function(e) {
             if (e.target === this) {
@@ -104,3 +101,6 @@
                 });
             });
         });
+
+        // Remove or comment out the auto-slide functionality
+        // setInterval(nextSlide, 8000);

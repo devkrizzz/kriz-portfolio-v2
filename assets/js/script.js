@@ -4,23 +4,7 @@ let currentSlide = 0;
         const videoTrack = document.getElementById('videoTrack');
         const dots = document.querySelectorAll('.dot');
         
-        const videos = [
-            {
-                src: "assets/videos/video1.mp4",
-                title: "Example 1",
-                description: "DUMMY DESCRIPTION"
-            },
-            {
-                src: "assets/videos/video2.mp4",
-                title: "Example 2",
-                description: "DUMMY DESCRIPTION"
-            },
-            {
-                src: "assets/videos/video3.mp4",
-                title: "Example 3",
-                description: "DUMMY DESCRIPTION"
-            }
-        ];
+        
 
         function updateSlider() {
             videoTrack.style.transform = `translateX(-${currentSlide * 100}%)`;

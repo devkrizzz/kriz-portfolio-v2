@@ -1,10 +1,3 @@
-Here is the complete, updated `README.md` file for your portfolio. It reflects all the recent upgrades you've made, including the custom video player, the dedicated contact page, the new review/collaboration sections, and the folder structure for your local assets.
-
-You can copy and paste this directly into a `README.md` file in the root of your `Kriz-Portfolio` folder.
-
----
-
-```markdown
 # Krizxter.mp4 — Cinematic Portfolio
 
 A highly immersive, dark-themed, and cinematic portfolio website designed for **Kriz**, a content creator, editor, and filmmaker based in New Delhi. Built with a focus on motion, typography, and a seamless custom viewing experience.

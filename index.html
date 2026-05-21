@@ -1,253 +1,861 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Meta Tags -->
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Krizxter.mp4 — Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Poppins:ital,wght@1,200;1,300;1,500&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --white:       #f0eeea;
+      --dim:         rgba(240, 238, 234, 0.45);
+      --faint:       rgba(240, 238, 234, 0.18);
+      --border:      rgba(240, 238, 234, 0.09);
+      --bg:          #080808;
+    }
 
-    <!-- Stylesheet -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Space Mono', monospace;
+      overflow-x: hidden;
+      cursor: crosshair;
+      min-height: 100svh;
+    }
 
-    <!-- Title -->
-    <title>Krizxter.ae</title>
+    /* ── CUSTOM SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); border-left: 1px solid rgba(255,255,255,0.03); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
 
-    <!-- Metadata for SEO and social media embeds -->
-    <meta name="description" content="A really cool portfolio. You should check it out" />
-    <meta name="image" content="https://cdn.discordapp.com/attachments/1177252082332471326/1314998691018440807/OBJNal8.png?ex=6755cf77&is=67547df7&hm=b1d661194258fe7143f64ed60db3fb8df7798ca69d3e141455e4fa99d0af83c6&">
+    /* ── BLOBS ── */
+    .blob-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .blob {
+      position: absolute; border-radius: 50%; filter: blur(95px); opacity: 0.55;
+      animation: drift 20s ease-in-out infinite alternate;
+    }
+    .b1 { width:55vw; height:55vw; background:#1a1a1a; top:-15%; left:-10%; animation-delay:0s; }
+    .b2 { width:45vw; height:45vw; background:#2a2a2a; top:10%;  right:-5%; animation-delay:-5s; }
+    .b3 { width:40vw; height:40vw; background:#111;    bottom:-10%; left:20%; animation-delay:-9s; }
+    .b4 { width:30vw; height:30vw; background:#1e1e1e; top:40%;  left:60%; animation-delay:-3s; }
+    @keyframes drift {
+      0%   { transform: translate(0,0) scale(1); }
+      33%  { transform: translate(4vw,-5vh) scale(1.07); }
+      66%  { transform: translate(-3vw,4vh) scale(0.94); }
+      100% { transform: translate(2vw,-2vh) scale(1.04); }
+    }
 
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="/assets/images/kriz.png" type="image/x-icon">
+    /* ── CURSOR BLOB ── */
+    .cursor-blob {
+      position: fixed; width:38vw; height:38vw; max-width:420px; max-height:420px;
+      border-radius:50%; background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+      filter: blur(60px); pointer-events:none; z-index:1; transform: translate(-50%,-50%);
+      transition: left 0.6s ease, top 0.6s ease;
+    }
+
+    /* ── GRID ── */
+    .grid-overlay {
+      position: fixed; inset:0; z-index:1; pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:50; padding: 1.3rem 2.5rem;
+      display: flex; align-items:center; justify-content:space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.07); backdrop-filter: blur(6px);
+    }
+    .nav-label { font-size:0.6rem; letter-spacing:0.24em; text-transform:uppercase; color:var(--dim); }
+    .nav-links a {
+      font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase;
+      color:var(--dim); text-decoration:none; margin-left:1.8rem; transition:color 0.25s;
+    }
+    .nav-links a:hover { color:var(--white); }
+
+    /* ── SIDE LABELS ── */
+    .side-text {
+      position: fixed; left:1.4rem; top:50%; transform: translateY(-50%) rotate(-90deg);
+      font-size:0.48rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--faint); z-index:10; white-space:nowrap;
+    }
+    .side-text-right { left:auto; right:1.4rem; transform:translateY(-50%) rotate(90deg); }
+
+    /* ── SECTIONS ── */
+    section { position: relative; z-index:2; padding: 6rem 2.5rem; border-top: 1px solid rgba(255,255,255,0.06); }
+    section:first-of-type { border-top:none; }
+    
+    .section-label {
+      font-size:0.55rem; letter-spacing:0.3em; text-transform:uppercase;
+      color:var(--dim); margin-bottom:2.5rem; display:flex; align-items:center; gap:1rem;
+    }
+    .section-label::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.1); }
+
+    /* ── ELEGANT DIVIDER ── */
+    .elegant-divider {
+      position: relative; z-index: 2; display: flex; align-items: center; justify-content: center;
+      padding: 3rem 0; width: 80%; margin: 0 auto;
+    }
+    .elegant-divider::before {
+      content: ''; position: absolute; width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    }
+    .elegant-divider .diamond {
+      width: 6px; height: 6px; background: var(--white); transform: rotate(45deg);
+      box-shadow: 0 0 12px rgba(255,255,255,0.6); z-index: 1;
+    }
+
+    /* ── HERO ── */
+    #hero {
+      min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end; 
+      padding:2.5rem; padding-top:6rem; border-top:none;
+    }
+    .hero-meta {
+      font-family:'EB Garamond',serif; font-style:italic; font-size:clamp(0.85rem,1.5vw,1.05rem); color:var(--dim);
+      margin-bottom:0.35rem; letter-spacing:0.04em;
+    }
+    .hero-title {
+      font-family:'Bebas Neue',sans-serif; font-size:clamp(3.8rem,12vw,10rem);
+      line-height:0.9; letter-spacing:0.01em; color:var(--white); display:block;
+    }
+    
+    /* HIGHLIGHTED INSTAGRAM BUTTON */
+    .btn-glow {
+      display: inline-flex; align-items: center; gap: 0.8rem; margin-top: 2rem;
+      padding: 0.85rem 1.8rem; background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--white); text-decoration: none; backdrop-filter: blur(8px);
+      transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .btn-glow:hover {
+      background: var(--white); color: #000; border-color: var(--white);
+      box-shadow: 0 0 25px rgba(255,255,255,0.3); transform: translateY(-2px);
+    }
+
+    .scroll-cue {
+      position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:6px;
+      opacity:0.3; animation:bob 2.2s ease-in-out infinite;
+    }
+    .scroll-cue span { font-size:0.5rem; letter-spacing:0.22em; text-transform:uppercase; }
+    .scroll-line { width:1px; height:36px; background:linear-gradient(to bottom,var(--white),transparent); }
+    @keyframes bob {
+      0%,100% { transform:translateX(-50%) translateY(0); }
+      50%      { transform:translateX(-50%) translateY(8px); }
+    }
+
+    /* ── TICKER ── */
+    .ticker-wrap {
+      overflow:hidden; position:relative; z-index:2; border-top:1px solid rgba(255,255,255,0.06);
+      border-bottom:1px solid rgba(255,255,255,0.06); padding:1rem 0;
+    }
+    .ticker-track { display:flex; white-space:nowrap; animation:ticker 22s linear infinite; gap:3rem; }
+    .ticker-item {
+      font-family:'Bebas Neue',sans-serif; font-size:clamp(1.4rem,3vw,2rem);
+      color:rgba(255,255,255,0.12); letter-spacing:0.06em; flex-shrink:0;
+    }
+    .ticker-item.accent { color:rgba(255,255,255,0.35); }
+    @keyframes ticker { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+
+    /* ══════════════════════════════════
+       ABOUT ME SECTION
+    ══════════════════════════════════ */
+    #about { padding: 5rem 2.5rem 3rem; border-top: none; }
+    .frame {
+      border: none; position: relative; padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem);
+      display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .content-row { display: flex; align-items: center; gap: clamp(1.5rem, 4vw, 4rem); flex: 1; }
+    .avatar-wrap {
+      flex-shrink: 0; width: clamp(110px, 18vw, 200px); height: clamp(110px, 18vw, 200px);
+      border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,0.12); background: #1a1a1a;
+    }
+    .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%) contrast(1.05); }
+
+    .bio-card {
+      flex: 1; max-width: 600px; background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09); border-radius: 6px;
+      padding: clamp(1.2rem, 3vw, 2.2rem); backdrop-filter: blur(6px);
+    }
+    .bio-greeting {
+      font-family: 'Poppins', sans-serif; font-style: normal; font-size: clamp(0.85rem, 1.6vw, 1rem);
+      color: var(--dim); margin-bottom: 0.6rem; letter-spacing: 0.03em; font-weight: 400;
+    }
+    .bio-body {
+      font-family: 'Poppins', sans-serif; font-style: normal; font-size: clamp(0.72rem, 1.2vw, 0.82rem);
+      line-height: 1.9; color: rgba(240,238,234,0.6); font-weight: 300;
+    }
+    .bio-body strong { color: rgba(240,238,234,0.85); font-weight: 500; }
+    .bottom-row {
+      display: flex; flex-direction: column; align-items: flex-end; text-align: right; margin-top: 2.5rem; gap: 0.3rem;
+    }
+    .bottom-meta {
+      font-family: 'EB Garamond', serif; font-style: italic; font-size: clamp(0.8rem, 1.5vw, 1rem); color: var(--dim); letter-spacing: 0.06em;
+    }
+    .big-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.8rem, 11vw, 9.5rem);
+      line-height: 0.85; letter-spacing: 0.02em; color: var(--white); display: block;
+    }
+
+    /* ══════════════════════════════════
+       COLLABORATIONS SECTION (Brands)
+    ══════════════════════════════════ */
+    #clients { padding: 3rem 2.5rem; border-top: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.01); }
+    .clients-grid {
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: clamp(2rem, 5vw, 4rem); padding: 1rem 0;
+    }
+    .client-logo {
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.5rem, 3vw, 2.2rem); letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.15); transition: color 0.3s ease; cursor: default;
+    }
+    .client-logo:hover { color: rgba(255,255,255,0.6); }
+
+    /* ══════════════════════════════════
+       FILTER TABS & 3-COLUMN VIDEO GRID
+    ══════════════════════════════════ */
+    .filter-tabs { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:2rem; }
+    .filter-btn {
+      padding:0.35rem 0.8rem; border:1px solid rgba(255,255,255,0.08); background:transparent;
+      font-family:'Space Mono',monospace; font-size:0.48rem; letter-spacing:0.18em; text-transform:uppercase;
+      color:var(--dim); cursor:pointer; transition:all 0.22s;
+    }
+    .filter-btn:hover, .filter-btn.active { border-color:rgba(255,255,255,0.35); color:var(--white); background:rgba(255,255,255,0.05); }
+
+    .video-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:1.6rem; }
+    .video-card {
+      background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.08); overflow:hidden;
+      transition:border-color 0.3s, transform 0.3s, background 0.3s; cursor:pointer; position: relative;
+    }
+    .video-card:hover { border-color:rgba(255,255,255,0.25); background:rgba(255,255,255,0.04); transform:translateY(-3px); }
+
+    .video-thumb { position:relative; width:100%; padding-bottom:56.25%; background:#0c0c0c; overflow:hidden; }
+    
+    .video-thumb .thumb-placeholder {
+      position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:0.5rem; background:#0a0a0a; border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1;
+    }
+    .thumb-placeholder svg { width:36px; height:36px; opacity:0.25; }
+    .thumb-placeholder span { font-size:0.45rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--faint); }
+
+    .video-info { padding:1.2rem; }
+    .video-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
+    .video-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(1.1rem,2vw,1.4rem); letter-spacing:0.05em; line-height:1.1; color:var(--white); margin-bottom:0.4rem; }
+    
+    /* Platform Link Styles */
+    .platform-link {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); text-decoration: none; margin-bottom: 0.6rem;
+      transition: color 0.2s;
+    }
+    .platform-link.yt:hover { color: #ff0000; }
+    .platform-link.ig:hover { color: #E1306C; }
+    .platform-link svg { width: 12px; height: 12px; }
+
+    .video-meta { font-family:'Poppins',sans-serif; font-size:0.62rem; color:var(--dim); line-height:1.5; margin-bottom:0.6rem; }
+    .video-tag { display:inline-block; padding:0.15rem 0.5rem; border:1px solid rgba(255,255,255,0.1); font-size:0.42rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--faint); }
+
+    .video-card.wide { grid-column: span 2; display:grid; grid-template-columns:1fr 1fr; }
+    .video-card.wide .video-thumb { padding-bottom:0; height:100%; min-height:180px; }
+    .video-card.wide .video-info { display:flex; flex-direction:column; justify-content:center; padding:1.6rem; }
+
+    /* ══════════════════════════════════
+       REVIEWS SECTION
+    ══════════════════════════════════ */
+    .review-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    .review-card {
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); padding: 2rem;
+      display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s;
+    }
+    .review-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.15); }
+    .stars { color: #facc15; font-size: 0.8rem; margin-bottom: 1rem; letter-spacing: 0.1em; }
+    .review-text { font-family: 'EB Garamond', serif; font-style: italic; font-size: 0.85rem; line-height: 1.8; color: rgba(240,238,234,0.75); margin-bottom: 1.5rem; }
+    .review-author { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); }
+
+    /* ══════════════════════════════════
+       CUSTOM VIDEO PLAYER STYLES
+    ══════════════════════════════════ */
+    .custom-player { position: absolute; inset: 0; width: 100%; height: 100%; background: #000; overflow: hidden; z-index: 10; }
+    .custom-player video { width: 100%; height: 100%; object-fit: cover; }
+    .player-overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: rgba(0,0,0,0.3); transition: opacity 0.3s; pointer-events: none; }
+    .custom-player.playing .player-overlay { opacity: 0; }
+    .play-icon-big { width: 48px; height: 48px; color: rgba(255,255,255,0.8); drop-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+    
+    .player-controls {
+      position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem 0.8rem 0.8rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); display: flex; align-items: center; gap: 0.8rem; opacity: 0; transition: opacity 0.3s;
+    }
+    .custom-player:hover .player-controls, .custom-player:not(.playing) .player-controls { opacity: 1; }
+    .ctrl-btn { background: transparent; border: none; color: rgba(255,255,255,0.85); cursor: pointer; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; transition: color 0.2s, transform 0.2s; }
+    .ctrl-btn:hover { color: #fff; transform: scale(1.1); }
+    .ctrl-btn svg { width: 100%; height: 100%; }
+    
+    .time-display { font-family: 'Space Mono', monospace; font-size: 0.55rem; color: rgba(255,255,255,0.85); letter-spacing: 0.05em; min-width: 65px; text-align: center; pointer-events: none; }
+    .progress-container { flex: 1; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; cursor: pointer; position: relative; overflow: hidden; }
+    .progress-filled { width: 0%; height: 100%; background: #fff; border-radius: 2px; transition: width 0.1s linear; }
+
+    .volume-container { display: flex; align-items: center; gap: 0.4rem; cursor: pointer; }
+    .volume-slider {
+      -webkit-appearance: none; appearance: none; width: 0px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; outline: none; transition: width 0.3s ease, opacity 0.3s ease; opacity: 0; padding: 0; margin: 0;
+    }
+    .volume-container:hover .volume-slider, .volume-slider:focus { width: 55px; opacity: 1; }
+    .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 10px; height: 10px; border-radius: 50%; background: #fff; cursor: pointer; }
+
+    /* ── CONTACT ── */
+    .contact-cta { font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,9vw,8rem); line-height:0.9; color:var(--white); margin-bottom:3rem; }
+    .contact-link {
+      display:inline-flex; align-items:center; gap:1rem; font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--white); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.3); padding-bottom:4px; transition:opacity 0.25s;
+    }
+    .contact-link:hover { opacity:0.6; }
+    .contact-link svg { width:14px; height:14px; }
+
+    /* ── FOOTER ── */
+    footer { position:relative; z-index:2; border-top:1px solid rgba(255,255,255,0.06); padding:2rem 2.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+    footer span { font-size:0.5rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--faint); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .fade-up { opacity:0; animation:fadeUp 0.9s ease forwards; }
+    .delay-1 { animation-delay:0.10s; } .delay-2 { animation-delay:0.28s; } .delay-3 { animation-delay:0.46s; } .delay-4 { animation-delay:0.64s; }
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.8s ease,transform 0.8s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* ── RESPONSIVE RULES ── */
+    @media (max-width: 1024px) {
+      .video-grid { grid-template-columns:repeat(2, 1fr); }
+      .review-grid { grid-template-columns:repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      nav { padding:1.2rem 1.4rem; }
+      .nav-links a { margin-left:1.2rem; }
+      .side-text, .side-text-right { display:none; }
+      #hero { padding:5.5rem 1.4rem 2rem; }
+      section { padding:4rem 1.4rem; }
+      footer { padding:1.5rem 1.4rem; flex-direction:column; align-items:flex-start; }
+
+      .video-grid { grid-template-columns:1fr; gap:1.2rem; }
+      .review-grid { grid-template-columns:1fr; gap:1.2rem; }
+      
+      .video-card.wide { grid-column:span 1; display:block; }
+      .video-card.wide .video-thumb { padding-bottom:56.25%; }
+
+      #about { padding: 4rem 1.2rem 2rem; min-height: unset; }
+      .frame { padding: 1.6rem 0; min-height: unset; }
+      .content-row { flex-direction: column; align-items: flex-start; gap: 1.4rem; }
+      .avatar-wrap { width: 100px; height: 100px; }
+      .bottom-row { align-items: flex-start; text-align: left; margin-top: 1.8rem; }
+      
+      .elegant-divider { width: 100%; padding: 2rem 0; }
+    }
+  </style>
 </head>
 <body>
-    <!-- =========================
-         Hero Section
-    ========================== -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-brand">KRIZ</div>
-            <h1 class="hero-title">
-                The Greatest <span class="highlight">Editor</span> that has ever lived?
-            </h1>
-            <div class="hero-stats">
-                <div class="stat-card">
-                    <span class="stat-number">2+</span>
-                    <span class="stat-label">Years of Experience</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">20+</span>
-                    <span class="stat-label">Happy Customers and still counting </span>
-                </div>
-            </div>
-        </div>
-        <div class="hero-image">
-            <div class="profile-container">
-                <div class="profile-card">
-                    <img src="assets/images/banner.png" alt="Kriz Profile" class="profile-image">
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- =========================
-         Intro Section
-    ========================== -->
-    <section class="intro">
-        <div class="container">
-            <h2>About Me</h2>
-            <p>
-                Hi there! I'm Kriz, a 16-year-old creator and student from New Delhi, India. Passionate about editing and coding, I enjoy turning ideas into reality through creativity and technology. Currently, I work as an editor while balancing my studies, working on my skills, and exploring new challenges. Be sure to check out my YouTube channel to see my work!
-            </p>
-        </div>
-    </section>
+  <div class="cursor-blob" id="cursorBlob"></div>
 
-    <!-- =========================
-         Projects Section
-    ========================== -->
-    <section class="projects">
-        <div class="container">
-            <h2>Featured Projects</h2>
-            <div class="video-slider">
-                <div class="video-track" id="videoTrack">
-                    <!-- Project 1 -->
-                    <div class="video-slide" onclick="openModal(0)">
-                        <div class="video-container">
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                src="https://www.youtube.com/embed/h_uzhvWP3SY?si=8m7ZOhzmNfn-V566?autoplay=1&mute=1&loop=1"
-                                title="YouTube video player"
-                                frameborder="0"
-                                allow="autoplay; encrypted-media"
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                    </div>
-                    <!-- Project 2 -->
-                    <div class="video-slide" onclick="openModal(1)">
-                        <div class="video-container">
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                src="https://www.youtube.com/embed/6dOh9ksflkY?si=GR7UpFfWCGj-d77V?autoplay=1&mute=1&loop=1"
-                                title="YouTube video player"
-                                frameborder="0"
-                                allow="autoplay; encrypted-media"
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                    </div>
-                    <!-- Project 3 -->
-                    <div class="video-slide" onclick="openModal(2)">
-                        <div class="video-container">
-                            <iframe
-                                width="100%"
-                                height="100%"
-                                src="https://www.youtube.com/embed/RhKcfWgRFzU?si=GNGADwWpVAWZUeYY?autoplay=1&mute=1&loop=1"
-                                title="YouTube video player"
-                                frameborder="0"
-                                allow="autoplay; encrypted-media"
-                                allowfullscreen>
-                            </iframe>
-                        </div>
-                    </div>
-                </div>
-                <!-- Slider Controls -->
-                <div class="slider-controls">
-                    <button class="slider-btn" onclick="previousSlide()">‹</button>
-                    <button class="slider-btn" onclick="nextSlide()">›</button>
-                </div>
-                <!-- Slider Dots -->
-                <div class="slider-dots">
-                    <div class="dot active" onclick="goToSlide(0)"></div>
-                    <div class="dot" onclick="goToSlide(1)"></div>
-                    <div class="dot" onclick="goToSlide(2)"></div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <div class="blob-bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <div class="blob b4"></div>
+  </div>
 
-    <!-- =========================
-         Modal for Project Videos
-    ========================== -->
-    <div class="modal" id="videoModal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal()">×</button>
-            <video class="modal-video" id="modalVideo" controls>
-                <source src="" type="video/mp4">
-            </video>
-            <div class="modal-info">
-                <h3 id="modalTitle"></h3>
-                <p id="modalDescription"></p>
-            </div>
+  <div class="grid-overlay"></div>
+
+  <div class="side-text">Krizxter.mp4 — Portfolio — 2025</div>
+  <div class="side-text side-text-right">Visual · Motion · Design</div>
+
+  <nav>
+    <span class="nav-label">Mainpage</span>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#clients">Collaborations</a>
+      <a href="#work">Work</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section id="hero">
+    <div>
+      <p class="hero-meta fade-up delay-1">Portfolio</p>
+      <span class="hero-title fade-up delay-2">Krizxter.mp4</span>
+      
+      <div class="fade-up delay-3">
+        <a href="https://instagram.com/your_handle" target="_blank" class="btn-glow">
+          <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          Follow on Instagram
+        </a>
+      </div>
+    </div>
+    
+    <div class="scroll-cue fade-up delay-4">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="ticker-wrap">
+    <div class="ticker-track">
+      <span class="ticker-item accent">Krizxter.mp4</span><span class="ticker-item">·</span>
+      <span class="ticker-item">Editor</span><span class="ticker-item">·</span>
+      <span class="ticker-item">Cinematographer</span><span class="ticker-item">·</span>
+      <span class="ticker-item accent">Portfolio</span><span class="ticker-item">·</span>
+      <span class="ticker-item">Goated Techie</span><span class="ticker-item">·</span>
+      <span class="ticker-item">Video</span><span class="ticker-item">·</span>
+      <span class="ticker-item accent">Krizxter.mp4</span><span class="ticker-item">·</span>
+      <span class="ticker-item">Editor</span><span class="ticker-item">·</span>
+      <span class="ticker-item">Cinematographer</span><span class="ticker-item">·</span>
+      <span class="ticker-item accent">Portfolio</span><span class="ticker-item">·</span>
+      <span class="ticker-item">Goated Techie</span><span class="ticker-item">·</span>
+      <span class="ticker-item">Video</span><span class="ticker-item">·</span>
+    </div>
+  </div>
+
+  <div class="elegant-divider reveal">
+    <div class="diamond"></div>
+  </div>
+
+  <section id="about">
+    <div class="section-label reveal">About</div>
+    <div class="frame reveal">
+      <div class="content-row">
+        <div class="avatar-wrap reveal" style="transition-delay:0.1s">
+          <img src="Assets/PFP/kriz2.png" alt="Kriz Profile" />
         </div>
+        <div class="bio-card reveal" style="transition-delay:0.2s">
+          <p class="bio-greeting">Hi there!</p>
+          <p class="bio-body">
+            I'm <strong>Kriz</strong>, a <strong>17-year-old content creator, editor, and filmmaker</strong> based in <strong>New Delhi, India</strong>, who blends creativity with technical skill to bring impactful ideas to life. Balancing my time as a student and a freelance creator, I jump into every stage of production — from <strong>directing and cinematography</strong> to <strong>advanced video editing</strong> — constantly refining my craft, exploring new workflows, and taking on fresh creative challenges. Driven by a passion for <strong>visual storytelling and technology</strong>, I love turning concepts into reality, so be sure to head over to my <strong>YouTube channel</strong> to see my latest work in action!
+          </p>
+        </div>
+      </div>
+      <div class="bottom-row reveal" style="transition-delay:0.3s">
+        <span class="bottom-meta">Krizxter.mp4</span>
+        <span class="big-title">ABOUT ME</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="clients">
+    <div class="section-label reveal" style="justify-content: center; margin-bottom: 3.5rem;">
+      <span>Brands & People I've Worked With</span>
+    </div>
+    <div class="clients-grid reveal">
+      <span class="client-logo">MY OWN SCHOOL</span>
+      <span class="client-logo">THE NERD FACTORY</span>
+      <span class="client-logo">KRIZXTER</span>
+      <span class="client-logo"></span>
+      <span class="client-logo"></span>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="section-label reveal">My Famous Edits</div>
+    
+    <div class="filter-tabs reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="competition">Competition</button>
+      <button class="filter-btn" data-filter="cinematic">Cinematic</button>
+      <button class="filter-btn" data-filter="event">Event</button>
+      <button class="filter-btn" data-filter="personal">Personal</button>
     </div>
 
-    <!-- =========================
-         Working Hours Section
-    ========================== -->
-    <section class="working-hours">
-        <div class="container">
-            <h2>Working Hours</h2>
-            <p class="working-hours-text">
-                My work hours are flexible and depend on my school schedule and other commitments. I usually edit in the evenings after school and on weekends when I have more free time. On average, I spend around 2-3 hours on weekdays and 4-5 hours on weekends. Feel free to reach out to me for any editing projects or collaborations. I'm always open to new opportunities and challenges!
-            </p>
-            <div class="hours-grid">
-                <!-- Weekdays -->
-                <div class="hours-card">
-                    <h3>Weekdays</h3>
-                    <p>Monday - Friday<br>2 - 3 Hours</p>
-                </div>
-                <!-- Weekends -->
-                <div class="hours-card">
-                    <h3>Weekends</h3>
-                    <p>Saturday - Sunday<br>4 - 5 Hours</p>
-                </div>
-                <!-- Emergency -->
-                <div class="hours-card">
-                    <h3>Emergency</h3>
-                    <p>Rush Projects<br>Available 24/7</p>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="video-grid" id="videoGrid">
 
-    <!-- =========================
-         Contact Section
-    ========================== -->
-    <section class="contact">
-        <div class="container">
-            <h2>GET IN TOUCH</h2>
-            <p style="font-size: 1.1rem; line-height: 1.8; max-width: 600px; margin: 0 auto 50px auto; color: rgba(255,255,255,0.8);">
-                If you have any questions, feedback, or just want to say hi, feel free to reach out! You can contact me via email or connect with me on social media. I'm always happy to hear from you and will do my best to respond as soon as possible.
-            </p>
-            <div class="contact-grid">
-                <!-- Location -->
-                <div class="contact-card no-link">
-                    <span class="contact-icon">📍</span>
-                    <h3>Location</h3>
-                    <p>New Delhi, India</p>
-                </div>
-                <!-- Primary Email -->
-                <a href="mailto:krizter@duck.com" class="contact-card">
-                    <span class="contact-icon">📧</span>
-                    <h3>Primary Email</h3>
-                    <p>krizter@duck.com</p>
-                </a>
-                <!-- Secondary Email -->
-                <a href="mailto:contact.krizter@gmail.com" class="contact-card">
-                    <span class="contact-icon">✉️</span>
-                    <h3>Secondary Email</h3>
-                    <p>contact.krizter@gmail.com</p>
-                </a>
-                <!-- Website -->
-                <a href="https://kriz.vercel.app" target="_blank" rel="noopener noreferrer" class="contact-card">
-                    <span class="contact-icon">🌐</span>
-                    <h3>Website</h3>
-                    <p>kriz.vercel.app</p>
-                </a>
+      <div class="video-card reveal" data-category="cinematic" style="transition-delay:0.15s">
+        <div class="video-thumb">
+          <div class="custom-player" id="cinematic-player">
+            <video src="/Assets/Videos/NothingIndia.mp4" playsinline preload="metadata" poster="/Assets/thumb/NothingIndiaThumb.png"></video>
+            <div class="player-overlay">
+              <svg class="play-icon-big" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </div>
+            <div class="player-controls">
+              <button class="ctrl-btn play-toggle">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </button>
+              <span class="time-display">0:00 / 0:00</span>
+              <div class="progress-container"><div class="progress-filled"></div></div>
+              <div class="volume-container">
+                <button class="ctrl-btn mute-toggle">
+                  <svg class="icon-unmute" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                  <svg class="icon-mute" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                </button>
+                <input type="range" class="volume-slider" min="0" max="1" step="0.05" value="1">
+              </div>
+            </div>
+          </div>
         </div>
-    </section>
-
-    <!-- =========================
-         Footer Section
-    ========================== -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-content">
-                <!-- Footer Left -->
-                <div class="footer-left">
-                    <div class="owner-text">
-                        <span>© 2025 Kriz</span>
-                    </div>
-                    <div class="copyright-text">
-                        All rights reserved
-                    </div>
-                </div>
-                <!-- Footer Center -->
-                <div class="footer-center">
-                    <div class="logo">KRIZ</div>
-                </div>
-                <!-- Footer Right -->
-                <div class="footer-right">
-                    <div class="developer-credit">
-                        <span>Created</span>
-                        <span>by @beastie23 on discord</span>
-                    </div>
-                    <div class="copyright-text">
-                        Website development
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>Built with passion</p>
-            </div>
+        <div class="video-info">
+          <div class="video-header">
+            <div class="video-title">My Cinematography Edit</div>
+          </div>
+          <a href="https://instagram.com/your_handle" target="_blank" class="platform-link ig">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            Watch on Instagram
+          </a>
+          <div class="video-meta">Well it got commented by @NothingIndia on my Instagram :] </div>
+          <span class="video-tag">Cinematic</span>
         </div>
-    </footer>
+      </div>
 
-    <!-- =========================
-         Scripts
-    ========================== -->
-    <script src="assets/js/script.js"></script>
+      <div class="video-card reveal" data-category="competition" style="transition-delay:0.05s">
+        <div class="video-thumb">
+          <div class="custom-player">
+            <video src="/Assets/Videos/Movie Making Competition 2025 _ TimeTravel.mp4" playsinline preload="metadata" poster="/Assets/thumb/MovieMakingThumb.jpg"></video>
+            <div class="player-overlay">
+              <svg class="play-icon-big" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div class="player-controls">
+              <button class="ctrl-btn play-toggle">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </button>
+              <span class="time-display">0:00 / 0:00</span>
+              <div class="progress-container"><div class="progress-filled"></div></div>
+              <div class="volume-container">
+                <button class="ctrl-btn mute-toggle">
+                  <svg class="icon-unmute" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                  <svg class="icon-mute" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                </button>
+                <input type="range" class="volume-slider" min="0" max="1" step="0.05" value="1">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="video-info">
+          <div class="video-header">
+            <div class="video-title">Movie Making Competition 2025</div>
+          </div>
+          <a href="https://youtu.be/uaEaWFR0pzo" target="_blank" class="platform-link yt">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+            Watch on YouTube
+          </a>
+          <div class="video-meta">Being a cameraman and editor ;]<br/><span style="opacity:0.5;font-size:0.55rem;">By 11th A</span></div>
+          <span class="video-tag">Competition</span>
+        </div>
+      </div>
+
+      <div class="video-card reveal" data-category="competition" style="transition-delay:0.1s">
+        <div class="video-thumb">
+          <div class="custom-player">
+            <video src="/Assets/Videos/Lucid Dream _The perfectly imperfect_Interschool Film Making Competition _.mp4" playsinline preload="metadata" poster="/Assets/thumb/InterschoolMovieMakingThumb.jpg"></video>
+            <div class="player-overlay">
+              <svg class="play-icon-big" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div class="player-controls">
+              <button class="ctrl-btn play-toggle">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </button>
+              <span class="time-display">0:00 / 0:00</span>
+              <div class="progress-container"><div class="progress-filled"></div></div>
+              <div class="volume-container">
+                <button class="ctrl-btn mute-toggle">
+                  <svg class="icon-unmute" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                  <svg class="icon-mute" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                </button>
+                <input type="range" class="volume-slider" min="0" max="1" step="0.05" value="1">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="video-info">
+          <div class="video-header">
+            <div class="video-title">Interschool Film Making Competition 2025</div>
+          </div>
+          <a href="https://youtu.be/5jC7PaNLUwI" target="_blank" class="platform-link yt">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+            Watch on YouTube
+          </a>
+          <div class="video-meta">Winning Short Movie</div>
+          <span class="video-tag">Competition</span>
+        </div>
+      </div>
+
+      <div class="video-card wide reveal" data-category="event" style="transition-delay:0.2s">
+        <div class="video-thumb">
+          <div class="custom-player">
+            <video src="/Assets/Videos/AnnualDayTeaser(2025-26)_ASCENZA_SFSDELHI.mp4" playsinline preload="metadata" poster="/Assets/thumb/AnnualDayTeaserThumb.jpg"></video>
+            <div class="player-overlay">
+              <svg class="play-icon-big" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div class="player-controls">
+              <button class="ctrl-btn play-toggle">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </button>
+              <span class="time-display">0:00 / 0:00</span>
+              <div class="progress-container"><div class="progress-filled"></div></div>
+              <div class="volume-container">
+                <button class="ctrl-btn mute-toggle">
+                  <svg class="icon-unmute" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                  <svg class="icon-mute" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                </button>
+                <input type="range" class="volume-slider" min="0" max="1" step="0.05" value="1">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="video-info">
+          <div class="video-header">
+            <div class="video-title">Annual Parents Day 2025–26 (Teaser)</div>
+          </div>
+          <a href="https://youtu.be/EMVw68Tb8sU" target="_blank" class="platform-link yt">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+            Watch on YouTube
+          </a>
+          <div class="video-meta">Had a great time working as a part of technical team, leading and making the official teaser for the <strong style="color:var(--white);">Annual Parents Day 2025–26</strong>.</div>
+          <span class="video-tag" style="margin-top:0.8rem;">Event</span>
+        </div>
+      </div>
+
+      <div class="video-card reveal" data-category="cinematic" style="transition-delay:0.15s">
+        <div class="video-thumb">
+          <div class="custom-player" id="cinematic-player">
+            <video src="/Assets/Videos/BirthdayMoGraph.mp4" playsinline preload="metadata" poster=""></video>
+            <div class="player-overlay">
+              <svg class="play-icon-big" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <div class="player-controls">
+              <button class="ctrl-btn play-toggle">
+                <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
+              </button>
+              <span class="time-display">0:00 / 0:00</span>
+              <div class="progress-container"><div class="progress-filled"></div></div>
+              <div class="volume-container">
+                <button class="ctrl-btn mute-toggle">
+                  <svg class="icon-unmute" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+                  <svg class="icon-mute" viewBox="0 0 24 24" fill="currentColor" style="display:none;"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>
+                </button>
+                <input type="range" class="volume-slider" min="0" max="1" step="0.05" value="1">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="video-info">
+          <div class="video-header">
+            <div class="video-title">It's My Birthday (Motion Graphics)</div>
+          </div>
+          <a href="https://instagram.com/your_handle" target="_blank" class="platform-link ig">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            Watch on Instagram
+          </a>
+          <div class="video-meta">Well it got commented by @NothingIndia on my Instagram :] </div>
+          <span class="video-tag">Cinematic</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="reviews">
+    <div class="section-label reveal">Client Feedback</div>
+    <div class="review-grid">
+      
+      <div class="review-card reveal" style="transition-delay:0.1s">
+        <div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Kriz completely elevated our brand's visual identity. The edits were clean, cinematic, and delivered ahead of schedule."</p>
+        </div>
+        <div class="review-author">- Sarah J., Creative Director</div>
+      </div>
+
+      <div class="review-card reveal" style="transition-delay:0.2s">
+        <div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"An absolute prodigy. The way he handles motion and pacing in his videos is top tier. Highly recommend working with him."</p>
+        </div>
+        <div class="review-author">- Rahul M., Content Creator</div>
+      </div>
+
+      <div class="review-card reveal" style="transition-delay:0.3s">
+        <div>
+          <div class="stars">★★★★★</div>
+          <p class="review-text">"Took our event footage and turned it into an absolute movie. The storytelling is incredible and the sound design blew me away!"</p>
+        </div>
+        <div class="review-author">- Event Coordinator, TechFest</div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="section-label reveal">Get In Touch</div>
+    <div class="contact-cta reveal">Let's make<br/>something<br/>unforgettable.</div>
+    <a href="mailto:hello@krizxter.mp4" class="contact-link reveal" style="transition-delay:0.2s">
+      hello@krizxter.mp4
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M3 8h10M9 4l4 4-4 4"/>
+      </svg>
+    </a>
+  </section>
+
+  <footer>
+    <span>© 2025 Krizxter.mp4</span>
+    <span>· Jack of all trades, Master of none. ·</span>
+    <span>Based Everywhere</span>
+  </footer>
+
+  <script>
+    // Cursor blob
+    const blob = document.getElementById('cursorBlob');
+    document.addEventListener('mousemove', e => {
+      blob.style.left = e.clientX + 'px';
+      blob.style.top  = e.clientY + 'px';
+    });
+
+    // Filter tabs logic
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const f = btn.dataset.filter;
+        document.querySelectorAll('.video-card').forEach(card => {
+          const match = f === 'all' || card.dataset.category === f;
+          card.style.display = match ? '' : 'none';
+        });
+      });
+    });
+
+    // Scroll reveal
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Custom HTML5 Video Player Logic (Timer + Volume Control)
+    document.querySelectorAll('.custom-player').forEach(player => {
+      const video = player.querySelector('video');
+      const playToggle = player.querySelector('.play-toggle');
+      const muteToggle = player.querySelector('.mute-toggle');
+      const volumeSlider = player.querySelector('.volume-slider');
+      
+      const progressContainer = player.querySelector('.progress-container');
+      const progressFilled = player.querySelector('.progress-filled');
+      const timeDisplay = player.querySelector('.time-display');
+      
+      const iconPlay = player.querySelector('.icon-play');
+      const iconPause = player.querySelector('.icon-pause');
+      const iconMute = player.querySelector('.icon-mute');
+      const iconUnmute = player.querySelector('.icon-unmute');
+
+      let lastVolume = 1;
+
+      function formatTime(seconds) {
+        if (isNaN(seconds)) return "0:00";
+        const m = Math.floor(seconds / 60);
+        const s = Math.floor(seconds % 60);
+        return `${m}:${s.toString().padStart(2, '0')}`;
+      }
+
+      function updateTimer() {
+        const current = formatTime(video.currentTime);
+        const total = formatTime(video.duration);
+        timeDisplay.textContent = `${current} / ${total}`;
+      }
+
+      function togglePlay(e) {
+        if(e) e.stopPropagation();
+        if (video.paused) {
+          // Pause all other videos on the page before playing this one
+          document.querySelectorAll('video').forEach(v => {
+            if(v !== video && !v.paused) v.pause();
+          });
+          document.querySelectorAll('.custom-player').forEach(p => {
+            if(p !== player) {
+              p.classList.remove('playing');
+              p.querySelector('.icon-play').style.display = 'block';
+              p.querySelector('.icon-pause').style.display = 'none';
+            }
+          });
+
+          video.play();
+          player.classList.add('playing');
+          iconPlay.style.display = 'none';
+          iconPause.style.display = 'block';
+        } else {
+          video.pause();
+          player.classList.remove('playing');
+          iconPlay.style.display = 'block';
+          iconPause.style.display = 'none';
+        }
+      }
+
+      function updateMuteUI() {
+        if (video.muted || video.volume === 0) {
+          iconUnmute.style.display = 'none';
+          iconMute.style.display = 'block';
+        } else {
+          iconUnmute.style.display = 'block';
+          iconMute.style.display = 'none';
+        }
+      }
+
+      video.addEventListener('loadedmetadata', updateTimer);
+
+      player.addEventListener('click', (e) => {
+        if (!e.target.closest('.player-controls')) togglePlay();
+      });
+
+      playToggle.addEventListener('click', togglePlay);
+
+      video.addEventListener('timeupdate', () => {
+        const percent = (video.currentTime / video.duration) * 100;
+        progressFilled.style.width = `${percent}%`;
+        updateTimer();
+      });
+
+      progressContainer.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const rect = progressContainer.getBoundingClientRect();
+        const pos = (e.clientX - rect.left) / rect.width;
+        video.currentTime = pos * video.duration;
+      });
+
+      volumeSlider.addEventListener('input', (e) => {
+        e.stopPropagation();
+        video.volume = e.target.value;
+        video.muted = (video.volume === 0);
+        updateMuteUI();
+      });
+
+      muteToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        video.muted = !video.muted;
+        if (video.muted) {
+          lastVolume = volumeSlider.value;
+          volumeSlider.value = 0;
+        } else {
+          volumeSlider.value = lastVolume || 1;
+          video.volume = volumeSlider.value;
+        }
+        updateMuteUI();
+      });
+    });
+  </script>
+
 </body>
 </html>

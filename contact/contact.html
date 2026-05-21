@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Krizxter.mp4</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Poppins:ital,wght@1,200;1,300;1,500&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── TOKENS ── */
+    :root {
+      --white:       #f0eeea;
+      --dim:         rgba(240, 238, 234, 0.45);
+      --faint:       rgba(240, 238, 234, 0.18);
+      --border:      rgba(240, 238, 234, 0.09);
+      --bg:          #080808;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Space Mono', monospace;
+      overflow-x: hidden;
+      cursor: crosshair;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── CUSTOM SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); border-left: 1px solid rgba(255,255,255,0.03); }
+    ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+
+    /* ── BLOBS ── */
+    .blob-bg { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .blob {
+      position: absolute; border-radius: 50%; filter: blur(95px); opacity: 0.55;
+      animation: drift 20s ease-in-out infinite alternate;
+    }
+    .b1 { width:55vw; height:55vw; background:#1a1a1a; top:-15%; left:-10%; animation-delay:0s; }
+    .b2 { width:45vw; height:45vw; background:#2a2a2a; top:10%;  right:-5%; animation-delay:-5s; }
+    .b3 { width:40vw; height:40vw; background:#111;    bottom:-10%; left:20%; animation-delay:-9s; }
+    .b4 { width:30vw; height:30vw; background:#1e1e1e; top:40%;  left:60%; animation-delay:-3s; }
+    @keyframes drift {
+      0%   { transform: translate(0,0) scale(1); }
+      33%  { transform: translate(4vw,-5vh) scale(1.07); }
+      66%  { transform: translate(-3vw,4vh) scale(0.94); }
+      100% { transform: translate(2vw,-2vh) scale(1.04); }
+    }
+
+    /* ── CURSOR BLOB ── */
+    .cursor-blob {
+      position: fixed; width:38vw; height:38vw; max-width:420px; max-height:420px;
+      border-radius:50%; background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%);
+      filter: blur(60px); pointer-events:none; z-index:1; transform: translate(-50%,-50%);
+      transition: left 0.6s ease, top 0.6s ease;
+    }
+
+    /* ── GRID ── */
+    .grid-overlay {
+      position: fixed; inset:0; z-index:1; pointer-events:none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:50; padding: 1.3rem 2.5rem;
+      display: flex; align-items:center; justify-content:space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.07); backdrop-filter: blur(6px);
+    }
+    .nav-label { font-size:0.6rem; letter-spacing:0.24em; text-transform:uppercase; color:var(--dim); }
+    .nav-links a {
+      font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase;
+      color:var(--dim); text-decoration:none; margin-left:1.8rem; transition:color 0.25s;
+    }
+    .nav-links a:hover { color:var(--white); }
+    .nav-links a.active { color: var(--white); }
+
+    /* ── SIDE LABELS ── */
+    .side-text {
+      position: fixed; left:1.4rem; top:50%; transform: translateY(-50%) rotate(-90deg);
+      font-size:0.48rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--faint); z-index:10; white-space:nowrap;
+    }
+    .side-text-right { left:auto; right:1.4rem; transform:translateY(-50%) rotate(90deg); }
+
+    /* ── CONTACT MAIN SECTION ── */
+    main {
+      position: relative; z-index: 2; flex: 1;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 8rem 2.5rem; width: 100%; max-width: 800px; margin: 0 auto;
+    }
+    
+    .contact-header { text-align: center; margin-bottom: 4rem; }
+    
+    .contact-meta {
+      font-family: 'EB Garamond', serif; font-style: italic; font-size: clamp(0.9rem, 2vw, 1.2rem);
+      color: var(--dim); margin-bottom: 0.5rem; letter-spacing: 0.05em;
+    }
+    
+    .contact-title {
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 10vw, 8rem);
+      line-height: 0.85; letter-spacing: 0.02em; color: var(--white); display: block;
+    }
+
+    .contact-links-container {
+      display: flex; flex-direction: column; gap: 1.5rem; width: 100%; max-width: 500px;
+    }
+
+    /* Interactive Contact Cards */
+    .contact-card {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 2rem; background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 8px;
+      text-decoration: none; color: var(--white); transition: all 0.3s ease;
+      position: relative; overflow: hidden; backdrop-filter: blur(8px);
+    }
+    
+    .contact-card::before {
+      content: ''; position: absolute; inset: 0; opacity: 0; transition: opacity 0.3s ease;
+      background: radial-gradient(circle at right center, var(--glow-color) 0%, transparent 60%);
+    }
+
+    .contact-card:hover {
+      transform: translateY(-4px); border-color: var(--border-color);
+      box-shadow: 0 8px 30px var(--shadow-color);
+    }
+    .contact-card:hover::before { opacity: 0.15; }
+
+    /* Custom Colors for platforms */
+    .contact-card.ig { --glow-color: #E1306C; --border-color: rgba(225, 48, 108, 0.5); --shadow-color: rgba(225, 48, 108, 0.15); }
+    .contact-card.dc { --glow-color: #5865F2; --border-color: rgba(88, 101, 242, 0.5); --shadow-color: rgba(88, 101, 242, 0.15); }
+    .contact-card.wa { --glow-color: #25D366; --border-color: rgba(37, 211, 102, 0.5); --shadow-color: rgba(37, 211, 102, 0.15); }
+    .contact-card.em { --glow-color: #3b82f6; --border-color: rgba(59, 130, 246, 0.5); --shadow-color: rgba(59, 130, 246, 0.15); }
+
+    .card-content { display: flex; align-items: center; gap: 1.2rem; position: relative; z-index: 2; }
+    
+    .card-icon {
+      width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.7); transition: color 0.3s ease;
+    }
+    .contact-card:hover .card-icon { color: var(--white); }
+    .card-icon svg { width: 100%; height: 100%; }
+
+    .card-text { display: flex; flex-direction: column; }
+    .card-title {
+      font-family: 'Space Mono', monospace; font-size: 0.85rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.2rem;
+    }
+    .card-subtitle {
+      font-family: 'Poppins', sans-serif; font-size: 0.65rem; color: var(--dim); letter-spacing: 0.05em;
+    }
+
+    .card-arrow {
+      color: rgba(255,255,255,0.2); transition: all 0.3s ease; position: relative; z-index: 2;
+    }
+    .contact-card:hover .card-arrow {
+      color: var(--white); transform: translateX(5px) rotate(-45deg);
+    }
+    .card-arrow svg { width: 20px; height: 20px; }
+
+    /* ── FOOTER ── */
+    footer {
+      position:relative; z-index:2; border-top:1px solid rgba(255,255,255,0.06); padding:2rem 2.5rem;
+      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; width: 100%;
+    }
+    footer span { font-size:0.5rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--faint); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    .fade-up { opacity:0; animation:fadeUp 0.9s ease forwards; }
+    .delay-1 { animation-delay:0.10s; } .delay-2 { animation-delay:0.28s; } 
+    .delay-3 { animation-delay:0.40s; } .delay-4 { animation-delay:0.50s; } 
+    .delay-5 { animation-delay:0.60s; } .delay-6 { animation-delay:0.70s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding:1.2rem 1.4rem; }
+      .nav-links a { margin-left:1.2rem; }
+      .side-text, .side-text-right { display:none; }
+      main { padding: 6rem 1.5rem; }
+      footer { padding:1.5rem 1.4rem; flex-direction:column; align-items:flex-start; }
+      .contact-card { padding: 1.2rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor-blob" id="cursorBlob"></div>
+
+  <div class="blob-bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <div class="blob b4"></div>
+  </div>
+
+  <div class="grid-overlay"></div>
+
+  <div class="side-text">Krizxter.mp4 — Contact</div>
+  <div class="side-text side-text-right">Let's Create</div>
+
+  <nav>
+    <span class="nav-label">Contact</span>
+    <div class="nav-links">
+      <a href="index.html">Mainpage</a>
+      <a href="index.html#work">Work</a>
+      <a href="contact.html" class="active">Contact</a>
+    </div>
+  </nav>
+
+  <main>
+    <div class="contact-header">
+      <p class="contact-meta fade-up delay-1">Get in touch</p>
+      <h1 class="contact-title fade-up delay-2">LET'S TALK</h1>
+    </div>
+
+    <div class="contact-links-container">
+      
+      <a href="https://instagram.com/your_handle" target="_blank" class="contact-card ig fade-up delay-3">
+        <div class="card-content">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+          </div>
+          <div class="card-text">
+            <span class="card-title">Instagram</span>
+            <span class="card-subtitle">@krizxter.mp4</span>
+          </div>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <a href="https://discordapp.com/users/YOUR_DISCORD_ID" target="_blank" class="contact-card dc fade-up delay-4">
+        <div class="card-content">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 12a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm6 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"></path>
+              <path d="M20.66 6.34a17.43 17.43 0 0 0-4.32-1.34c-.16.29-.35.65-.48.96-1.57-.24-3.13-.24-4.68 0-.14-.32-.34-.68-.5-.96a17.4 17.4 0 0 0-4.33 1.34A17.96 17.96 0 0 0 3 17.65a17.5 17.5 0 0 0 5.38 2.72c.42-.58.8-1.2 1.12-1.85-.49-.18-.96-.4-1.4-.66.12-.09.23-.19.34-.28 2.8 1.28 5.83 1.28 8.6 0 .11.09.23.19.34.28-.45.26-.92.48-1.41.66.33.65.7 1.27 1.12 1.85a17.5 17.5 0 0 0 5.38-2.72 17.9 17.9 0 0 0-1.47-11.31z"></path>
+            </svg>
+          </div>
+          <div class="card-text">
+            <span class="card-title">Discord</span>
+            <span class="card-subtitle">krizzz.exe</span>
+          </div>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+      <!-- <a href="https://wa.me/91XXXXXXXXXX" target="_blank" class="contact-card wa fade-up delay-5">
+        <div class="card-content">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+          </div>
+          <div class="card-text">
+            <span class="card-title">WhatsApp</span>
+            <span class="card-subtitle">+91 xxxxx xxxxx</span>
+          </div>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a> -->
+
+      <a href="mailto:hello@krizxter.mp4" class="contact-card em fade-up delay-6">
+        <div class="card-content">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+              <polyline points="22,6 12,13 2,6"></polyline>
+            </svg>
+          </div>
+          <div class="card-text">
+            <span class="card-title">Email</span>
+            <span class="card-subtitle">contact.krizxter@gmail.com</span>
+          </div>
+        </div>
+        <div class="card-arrow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <footer>
+    <span>© 2025 Krizxter.mp4</span>
+    <span>· Jack of all trades, Master of none. ·</span>
+    <span>Based Everywhere</span>
+  </footer>
+
+  <script>
+    // Cursor blob logic
+    const blob = document.getElementById('cursorBlob');
+    document.addEventListener('mousemove', e => {
+      blob.style.left = e.clientX + 'px';
+      blob.style.top  = e.clientY + 'px';
+    });
+  </script>
+
+</body>
+</html>

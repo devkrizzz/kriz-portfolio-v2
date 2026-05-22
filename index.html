@@ -3,9 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Krizxter.mp4 — Portfolio</title>
+  
+  <title>Krizxter.mp4 — Cinematic Portfolio</title>
+  <meta name="title" content="Krizxter.mp4 — Cinematic Portfolio">
+  <meta name="description" content="17-year-old content creator, editor, and filmmaker based in New Delhi. View my latest cinematography, edits, and motion graphics.">
+  <meta name="theme-color" content="#080808">
+  <link rel="icon" type="image/png" href="./Assets/PFP/kriz_circled.png" />
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://krizxter.com/"> <meta property="og:title" content="Krizxter.mp4 — Cinematic Portfolio">
+  <meta property="og:description" content="17-year-old content creator, editor, and filmmaker based in New Delhi. View my latest cinematography, edits, and motion graphics.">
+  <meta property="og:image" content="./Assets/PFP/kriz_circled.png"> <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://krizxter.com/">
+  <meta property="twitter:title" content="Krizxter.mp4 — Cinematic Portfolio">
+  <meta property="twitter:description" content="17-year-old content creator, editor, and filmmaker based in New Delhi. View my latest cinematography, edits, and motion graphics.">
+  <meta property="twitter:image" content="./Assets/PFP/kriz_circled.png">
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Poppins:ital,wght@1,200;1,300;1,500&display=swap" rel="stylesheet"/>
+  
   <style>
     /* ── TOKENS ── */
     :root {
@@ -72,14 +88,36 @@
     nav {
       position: fixed; top:0; left:0; right:0; z-index:50; padding: 1.3rem 2.5rem;
       display: flex; align-items:center; justify-content:space-between;
-      border-bottom: 1px solid rgba(255,255,255,0.07); backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(255,255,255,0.07); backdrop-filter: blur(6px); background: rgba(8,8,8,0.5);
     }
-    .nav-label { font-size:0.6rem; letter-spacing:0.24em; text-transform:uppercase; color:var(--dim); }
+    .nav-label { font-size:clamp(0.6rem, 1vw, 0.7rem); letter-spacing:0.24em; text-transform:uppercase; color:var(--dim); z-index: 51; }
+    
+    .nav-links { display: flex; align-items: center; }
     .nav-links a {
       font-size:0.6rem; letter-spacing:0.18em; text-transform:uppercase;
       color:var(--dim); text-decoration:none; margin-left:1.8rem; transition:color 0.25s;
     }
     .nav-links a:hover { color:var(--white); }
+
+    /* Mobile Menu Button */
+    .mobile-menu-btn {
+      display: none; background: transparent; border: none; color: var(--white);
+      cursor: pointer; z-index: 51; padding: 0.5rem;
+    }
+    .mobile-menu-btn svg { width: 24px; height: 24px; }
+
+    /* Mobile Overlay */
+    .mobile-overlay {
+      position: fixed; inset: 0; background: rgba(8,8,8,0.95); backdrop-filter: blur(10px);
+      z-index: 49; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 2.5rem; opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
+    }
+    .mobile-overlay.active { opacity: 1; pointer-events: auto; }
+    .mobile-overlay a {
+      font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 0.05em;
+      color: var(--dim); text-decoration: none; transition: color 0.3s ease; text-transform: uppercase;
+    }
+    .mobile-overlay a:hover, .mobile-overlay a:active { color: var(--white); }
 
     /* ── SIDE LABELS ── */
     .side-text {
@@ -93,7 +131,7 @@
     section:first-of-type { border-top:none; }
     
     .section-label {
-      font-size:0.55rem; letter-spacing:0.3em; text-transform:uppercase;
+      font-size:clamp(0.55rem, 1.5vw, 0.65rem); letter-spacing:0.3em; text-transform:uppercase;
       color:var(--dim); margin-bottom:2.5rem; display:flex; align-items:center; gap:1rem;
     }
     .section-label::after { content:''; flex:1; height:1px; background:rgba(255,255,255,0.1); }
@@ -118,21 +156,22 @@
       padding:2.5rem; padding-top:6rem; border-top:none;
     }
     .hero-meta {
-      font-family:'EB Garamond',serif; font-style:italic; font-size:clamp(0.85rem,1.5vw,1.05rem); color:var(--dim);
+      font-family:'EB Garamond',serif; font-style:italic; font-size:clamp(1rem, 2vw, 1.2rem); color:var(--dim);
       margin-bottom:0.35rem; letter-spacing:0.04em;
     }
     .hero-title {
-      font-family:'Bebas Neue',sans-serif; font-size:clamp(3.8rem,12vw,10rem);
+      font-family:'Bebas Neue',sans-serif; font-size:clamp(4.5rem, 15vw, 12rem);
       line-height:0.9; letter-spacing:0.01em; color:var(--white); display:block;
     }
     
     /* HIGHLIGHTED INSTAGRAM BUTTON */
     .btn-glow {
       display: inline-flex; align-items: center; gap: 0.8rem; margin-top: 2rem;
-      padding: 0.85rem 1.8rem; background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
-      font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--white); text-decoration: none; backdrop-filter: blur(8px);
+      padding: clamp(0.7rem, 2vw, 0.85rem) clamp(1.4rem, 4vw, 1.8rem); 
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.2); border-radius: 50px;
+      font-family: 'Space Mono', monospace; font-size: clamp(0.6rem, 1.5vw, 0.65rem); 
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--white); 
+      text-decoration: none; backdrop-filter: blur(8px);
       transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
     }
     .btn-glow:hover {
@@ -159,7 +198,7 @@
     }
     .ticker-track { display:flex; white-space:nowrap; animation:ticker 22s linear infinite; gap:3rem; }
     .ticker-item {
-      font-family:'Bebas Neue',sans-serif; font-size:clamp(1.4rem,3vw,2rem);
+      font-family:'Bebas Neue',sans-serif; font-size:clamp(1.6rem, 4vw, 2.2rem);
       color:rgba(255,255,255,0.12); letter-spacing:0.06em; flex-shrink:0;
     }
     .ticker-item.accent { color:rgba(255,255,255,0.35); }
@@ -173,35 +212,35 @@
       border: none; position: relative; padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3.5rem);
       display: flex; flex-direction: column; justify-content: space-between;
     }
-    .content-row { display: flex; align-items: center; gap: clamp(1.5rem, 4vw, 4rem); flex: 1; }
+    .content-row { display: flex; align-items: center; gap: clamp(2rem, 5vw, 4rem); flex: 1; }
     .avatar-wrap {
-      flex-shrink: 0; width: clamp(110px, 18vw, 200px); height: clamp(110px, 18vw, 200px);
+      flex-shrink: 0; width: clamp(130px, 22vw, 200px); height: clamp(130px, 22vw, 200px);
       border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,0.12); background: #1a1a1a;
     }
     .avatar-wrap img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(20%) contrast(1.05); }
 
     .bio-card {
-      flex: 1; max-width: 600px; background: rgba(255,255,255,0.04);
+      flex: 1; max-width: 650px; background: rgba(255,255,255,0.04);
       border: 1px solid rgba(255,255,255,0.09); border-radius: 6px;
-      padding: clamp(1.2rem, 3vw, 2.2rem); backdrop-filter: blur(6px);
+      padding: clamp(1.5rem, 4vw, 2.5rem); backdrop-filter: blur(6px);
     }
     .bio-greeting {
-      font-family: 'Poppins', sans-serif; font-style: normal; font-size: clamp(0.85rem, 1.6vw, 1rem);
-      color: var(--dim); margin-bottom: 0.6rem; letter-spacing: 0.03em; font-weight: 400;
+      font-family: 'Poppins', sans-serif; font-style: normal; font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: var(--dim); margin-bottom: 0.8rem; letter-spacing: 0.03em; font-weight: 400;
     }
     .bio-body {
-      font-family: 'Poppins', sans-serif; font-style: normal; font-size: clamp(0.72rem, 1.2vw, 0.82rem);
-      line-height: 1.9; color: rgba(240,238,234,0.6); font-weight: 300;
+      font-family: 'Poppins', sans-serif; font-style: normal; font-size: clamp(0.85rem, 1.6vw, 0.95rem);
+      line-height: 1.9; color: rgba(240,238,234,0.65); font-weight: 300;
     }
-    .bio-body strong { color: rgba(240,238,234,0.85); font-weight: 500; }
+    .bio-body strong { color: rgba(240,238,234,0.9); font-weight: 500; }
     .bottom-row {
-      display: flex; flex-direction: column; align-items: flex-end; text-align: right; margin-top: 2.5rem; gap: 0.3rem;
+      display: flex; flex-direction: column; align-items: flex-end; text-align: right; margin-top: 3rem; gap: 0.3rem;
     }
     .bottom-meta {
-      font-family: 'EB Garamond', serif; font-style: italic; font-size: clamp(0.8rem, 1.5vw, 1rem); color: var(--dim); letter-spacing: 0.06em;
+      font-family: 'EB Garamond', serif; font-style: italic; font-size: clamp(0.9rem, 1.8vw, 1.1rem); color: var(--dim); letter-spacing: 0.06em;
     }
     .big-title {
-      font-family: 'Bebas Neue', sans-serif; font-size: clamp(3.8rem, 11vw, 9.5rem);
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(4rem, 12vw, 10rem);
       line-height: 0.85; letter-spacing: 0.02em; color: var(--white); display: block;
     }
 
@@ -210,10 +249,10 @@
     ══════════════════════════════════ */
     #clients { padding: 3rem 2.5rem; border-top: 1px solid rgba(255,255,255,0.06); background: rgba(255,255,255,0.01); }
     .clients-grid {
-      display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: clamp(2rem, 5vw, 4rem); padding: 1rem 0;
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: clamp(2rem, 6vw, 5rem); padding: 1rem 0;
     }
     .client-logo {
-      font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.5rem, 3vw, 2.2rem); letter-spacing: 0.1em;
+      font-family: 'Bebas Neue', sans-serif; font-size: clamp(1.8rem, 4vw, 2.5rem); letter-spacing: 0.1em;
       color: rgba(255,255,255,0.15); transition: color 0.3s ease; cursor: default;
     }
     .client-logo:hover { color: rgba(255,255,255,0.6); }
@@ -223,8 +262,8 @@
     ══════════════════════════════════ */
     .filter-tabs { display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:2rem; }
     .filter-btn {
-      padding:0.35rem 0.8rem; border:1px solid rgba(255,255,255,0.08); background:transparent;
-      font-family:'Space Mono',monospace; font-size:0.48rem; letter-spacing:0.18em; text-transform:uppercase;
+      padding:0.4rem 1rem; border:1px solid rgba(255,255,255,0.08); background:transparent;
+      font-family:'Space Mono',monospace; font-size:clamp(0.5rem, 1.2vw, 0.55rem); letter-spacing:0.18em; text-transform:uppercase;
       color:var(--dim); cursor:pointer; transition:all 0.22s;
     }
     .filter-btn:hover, .filter-btn.active { border-color:rgba(255,255,255,0.35); color:var(--white); background:rgba(255,255,255,0.05); }
@@ -238,35 +277,31 @@
 
     .video-thumb { position:relative; width:100%; padding-bottom:56.25%; background:#0c0c0c; overflow:hidden; }
     .video-thumb iframe { position:absolute; inset:0; width:100%; height:100%; border:none; z-index: 10; pointer-events: auto; }
-    .video-thumb .thumb-placeholder {
-      position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;
-      gap:0.5rem; background:#0a0a0a; border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1;
-    }
-    .thumb-placeholder svg { width:36px; height:36px; opacity:0.25; }
-    .thumb-placeholder span { font-size:0.45rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--faint); }
-
+    
     .video-info { padding:1.2rem; }
     .video-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; }
-    .video-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(1.1rem,2vw,1.4rem); letter-spacing:0.05em; line-height:1.1; color:var(--white); margin-bottom:0.4rem; }
+    .video-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(1.2rem, 2.5vw, 1.5rem); letter-spacing:0.05em; line-height:1.1; color:var(--white); margin-bottom:0.4rem; }
     
     /* Platform Link Styles */
     .platform-link {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: clamp(0.5rem, 1.2vw, 0.55rem); letter-spacing: 0.15em; text-transform: uppercase;
       color: rgba(255,255,255,0.4); text-decoration: none; margin-bottom: 0.6rem;
       transition: color 0.2s;
     }
     .platform-link.yt:hover { color: #ff0000; }
     .platform-link.ig:hover { color: #E1306C; }
-    .platform-link svg { width: 12px; height: 12px; }
+    .platform-link svg { width: 14px; height: 14px; }
 
-    .video-meta { font-family:'Poppins',sans-serif; font-size:0.62rem; color:var(--dim); line-height:1.5; margin-bottom:0.6rem; }
-    .video-tag { display:inline-block; padding:0.15rem 0.5rem; border:1px solid rgba(255,255,255,0.1); font-size:0.42rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--faint); }
+    .video-meta { font-family:'Poppins',sans-serif; font-size:clamp(0.7rem, 1.5vw, 0.75rem); color:var(--dim); line-height:1.5; margin-bottom:0.8rem; }
+    .video-tag { display:inline-block; padding:0.2rem 0.6rem; border:1px solid rgba(255,255,255,0.1); font-size:clamp(0.45rem, 1vw, 0.5rem); letter-spacing:0.18em; text-transform:uppercase; color:var(--faint); }
 
-    /* WIDE CARD: Reverted to side-by-side */
+    /* WIDE CARD: Restored to side-by-side */
     .video-card.wide { grid-column: span 2; display:grid; grid-template-columns:1fr 1fr; }
     .video-card.wide .video-thumb { padding-bottom:0; height:100%; min-height:180px; }
-    .video-card.wide .video-info { display:flex; flex-direction:column; justify-content:center; padding:1.6rem; }
+    .video-card.wide .video-info { display:flex; flex-direction:column; justify-content:center; padding:1.8rem; }
+    .video-card.wide .video-title { font-size:clamp(1.4rem, 3vw, 1.8rem); margin-bottom:0.4rem; }
+    .video-card.wide .video-meta { font-size:clamp(0.75rem, 1.6vw, 0.8rem); line-height:1.6; color:rgba(240,238,234,0.55); }
 
     /* ══════════════════════════════════
        REVIEWS SECTION
@@ -277,9 +312,9 @@
       display: flex; flex-direction: column; justify-content: space-between; transition: transform 0.3s;
     }
     .review-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.15); }
-    .stars { color: #facc15; font-size: 0.8rem; margin-bottom: 1rem; letter-spacing: 0.1em; }
-    .review-text { font-family: 'EB Garamond', serif; font-style: italic; font-size: 0.85rem; line-height: 1.8; color: rgba(240,238,234,0.75); margin-bottom: 1.5rem; }
-    .review-author { font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); }
+    .stars { color: #facc15; font-size: 0.9rem; margin-bottom: 1rem; letter-spacing: 0.1em; }
+    .review-text { font-family: 'EB Garamond', serif; font-style: italic; font-size: clamp(0.9rem, 1.8vw, 1rem); line-height: 1.8; color: rgba(240,238,234,0.75); margin-bottom: 1.5rem; }
+    .review-author { font-family: 'Space Mono', monospace; font-size: clamp(0.55rem, 1.2vw, 0.6rem); letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); }
 
     /* ══════════════════════════════════
        CUSTOM VIDEO PLAYER STYLES
@@ -311,16 +346,16 @@
     .volume-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 10px; height: 10px; border-radius: 50%; background: #fff; cursor: pointer; }
 
     /* ── CONTACT ── */
-    .contact-cta { font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,9vw,8rem); line-height:0.9; color:var(--white); margin-bottom:3rem; }
+    .contact-cta { font-family:'Bebas Neue',sans-serif; font-size:clamp(3.5rem,10vw,8rem); line-height:0.9; color:var(--white); margin-bottom:3rem; }
     .contact-link {
-      display:inline-flex; align-items:center; gap:1rem; font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--white); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.3); padding-bottom:4px; transition:opacity 0.25s;
+      display:inline-flex; align-items:center; gap:1rem; font-size:clamp(0.7rem, 1.8vw, 0.8rem); letter-spacing:0.18em; text-transform:uppercase; color:var(--white); text-decoration:none; border-bottom:1px solid rgba(255,255,255,0.3); padding-bottom:4px; transition:opacity 0.25s;
     }
     .contact-link:hover { opacity:0.6; }
-    .contact-link svg { width:14px; height:14px; }
+    .contact-link svg { width:16px; height:16px; }
 
     /* ── FOOTER ── */
     footer { position:relative; z-index:2; border-top:1px solid rgba(255,255,255,0.06); padding:2rem 2.5rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
-    footer span { font-size:0.5rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--faint); }
+    footer span { font-size:0.55rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--faint); }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
@@ -335,25 +370,26 @@
       .review-grid { grid-template-columns:repeat(2, 1fr); }
     }
     @media (max-width: 768px) {
-      nav { padding:1.2rem 1.4rem; }
-      .nav-links a { margin-left:1.2rem; }
-      .side-text, .side-text-right { display:none; }
-      #hero { padding:5.5rem 1.4rem 2rem; }
-      section { padding:4rem 1.4rem; }
-      footer { padding:1.5rem 1.4rem; flex-direction:column; align-items:flex-start; }
-
-      .video-grid { grid-template-columns:1fr; gap:1.2rem; }
-      .review-grid { grid-template-columns:1fr; gap:1.2rem; }
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; } /* Hide standard links on mobile */
+      .mobile-menu-btn { display: block; } /* Show hamburger */
       
-      .video-card.wide { grid-column:span 1; grid-template-columns:1fr; }
-      .video-card.wide .video-thumb { height:auto; padding-bottom:56.25%; min-height:unset; }
-      .video-card.wide .video-info { padding:1.2rem; }
+      .side-text, .side-text-right { display:none; }
+      #hero { padding:5.5rem 1.5rem 2rem; }
+      section { padding:4rem 1.5rem; }
+      footer { padding:2rem 1.5rem; flex-direction:column; align-items:flex-start; gap: 1.5rem; }
 
-      #about { padding: 4rem 1.2rem 2rem; min-height: unset; }
-      .frame { padding: 1.6rem 0; min-height: unset; }
-      .content-row { flex-direction: column; align-items: flex-start; gap: 1.4rem; }
-      .avatar-wrap { width: 100px; height: 100px; }
-      .bottom-row { align-items: flex-start; text-align: left; margin-top: 1.8rem; }
+      .video-grid { grid-template-columns:1fr; gap:1.5rem; }
+      .review-grid { grid-template-columns:1fr; gap:1.5rem; }
+      
+      .video-card.wide { grid-column:span 1; display:block; }
+      .video-card.wide .video-thumb { padding-bottom:56.25%; }
+
+      #about { padding: 4rem 1.5rem 2rem; }
+      .frame { padding: 1.5rem 0; }
+      .content-row { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+      .avatar-wrap { width: 120px; height: 120px; }
+      .bottom-row { align-items: flex-start; text-align: left; margin-top: 2rem; }
       
       .elegant-divider { width: 100%; padding: 2rem 0; }
     }
@@ -377,6 +413,7 @@
 
   <nav>
     <span class="nav-label">Mainpage</span>
+    
     <div class="nav-links">
       <a href="#about">About</a>
       <a href="#clients">Collaborations</a>
@@ -384,7 +421,23 @@
       <a href="#reviews">Reviews</a>
       <a href="contact.html">Contact</a>
     </div>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
   </nav>
+
+  <div class="mobile-overlay" id="mobileOverlay">
+    <a href="#about" class="mobile-link">About</a>
+    <a href="#clients" class="mobile-link">Collaborations</a>
+    <a href="#work" class="mobile-link">Work</a>
+    <a href="#reviews" class="mobile-link">Reviews</a>
+    <a href="contact.html" class="mobile-link">Contact</a>
+  </div>
 
   <section id="hero">
     <div>
@@ -392,7 +445,7 @@
       <span class="hero-title fade-up delay-2">Krizxter.mp4</span>
       
       <div class="fade-up delay-3">
-        <a href="https://instagram.com/your_handle" target="_blank" class="btn-glow">
+        <a href="https://www.instagram.com/krizxter.mp4/" target="_blank" class="btn-glow">
           <svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -503,7 +556,7 @@
           <div class="video-header">
             <div class="video-title">My Cinematography Edit</div>
           </div>
-          <a href="https://instagram.com/your_handle" target="_blank" class="platform-link ig">
+          <a href="https://www.instagram.com/p/DMXv0ExTdor/" target="_blank" class="platform-link ig">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -518,13 +571,13 @@
 
       <div class="video-card reveal" data-category="competition" style="transition-delay:0.05s">
         <div class="video-thumb">
-          <iframe src="https://www.youtube-nocookie.com/embed/uaEaWFR0pzo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <iframe src="https://www.youtube-nocookie.com/embed/uaEaWFR0pzo?si=IeFTMUM6M6KBPjpq" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
         <div class="video-info">
           <div class="video-header">
             <div class="video-title">Movie Making Competition 2025</div>
           </div>
-          <a href="https://youtu.be/uaEaWFR0pzo" target="_blank" class="platform-link yt">
+          <a href="https://youtu.be/uaEaWFR0pzo?si=IeFTMUM6M6KBPjpq" target="_blank" class="platform-link yt">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
             Watch on YouTube
           </a>
@@ -535,13 +588,13 @@
 
       <div class="video-card reveal" data-category="competition" style="transition-delay:0.1s">
         <div class="video-thumb">
-          <iframe src="https://www.youtube-nocookie.com/embed/5jC7PaNLUwI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <iframe src="https://www.youtube-nocookie.com/embed/5jC7PaNLUwI?si=YDHGdNN-nWyXOfZZ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
         <div class="video-info">
           <div class="video-header">
             <div class="video-title">Interschool Film Making Competition 2025</div>
           </div>
-          <a href="https://youtu.be/5jC7PaNLUwI" target="_blank" class="platform-link yt">
+          <a href="https://youtu.be/5jC7PaNLUwI?si=YDHGdNN-nWyXOfZZ" target="_blank" class="platform-link yt">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
             Watch on YouTube
           </a>
@@ -558,7 +611,7 @@
           <div class="video-header">
             <div class="video-title">Annual Parents Day 2025–26 (Teaser)</div>
           </div>
-          <a href="https://youtu.be/EMVw68Tb8sU" target="_blank" class="platform-link yt">
+          <a href="https://www.youtube.com/watch?v=EMVw68Tb8sU" target="_blank" class="platform-link yt">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
             Watch on YouTube
           </a>
@@ -595,7 +648,7 @@
           <div class="video-header">
             <div class="video-title">It's My Birthday (Motion Graphics)</div>
           </div>
-          <a href="https://instagram.com/your_handle" target="_blank" class="platform-link ig">
+          <a href="https://www.instagram.com/p/DOy1KiHk3qS/" target="_blank" class="platform-link ig">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
               <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
@@ -665,6 +718,33 @@
     document.addEventListener('mousemove', e => {
       blob.style.left = e.clientX + 'px';
       blob.style.top  = e.clientY + 'px';
+    });
+
+    // Mobile Navigation Logic
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mobileOverlay = document.getElementById('mobileOverlay');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+    
+    let isMenuOpen = false;
+
+    mobileMenuBtn.addEventListener('click', () => {
+      isMenuOpen = !isMenuOpen;
+      if(isMenuOpen) {
+        mobileOverlay.classList.add('active');
+        mobileMenuBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>';
+      } else {
+        mobileOverlay.classList.remove('active');
+        mobileMenuBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+      }
+    });
+
+    // Close menu when a link is clicked
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        isMenuOpen = false;
+        mobileOverlay.classList.remove('active');
+        mobileMenuBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>';
+      });
     });
 
     // Filter tabs logic

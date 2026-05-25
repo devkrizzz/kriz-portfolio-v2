@@ -4,24 +4,23 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   
-  <title>Krizxter.mp4 — Portfolio</title>
-  <meta name="title" content="Krizxter.mp4">
+  <title>Krizxter.mp4</title>
+  <meta name="title" content="Krizxter.mp4 — Portfolio">
   <meta name="description" content="Hey, I'm Krizxter! A 17-year-old content creator, editor, and filmmaker based in New Delhi. View my latest cinematography, edits, and motion graphics.">
   <meta name="theme-color" content="#080808">
-  
-  <link rel="icon" type="image/png" href="/Assets/PFP/kriz_circled.ico" />
+  <link rel="icon" type="image/png" href="./Assets/PFP/kriz2.png" />
 
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://kriz.vercel.app/"> 
-  <meta property="og:title" content="Krizxter.mp4">
+  <meta property="og:title" content="Krizxter.mp4 — Portfolio">
   <meta property="og:description" content="Hey, I'm Krizxter! A 17-year-old content creator, editor, and filmmaker based in New Delhi. View my latest cinematography, edits, and motion graphics.">
-  <meta property="og:image" content="https://kriz.vercel.app/Assets/PFP/kriz_circled.ico"> 
+  <meta property="og:image" content="https://kriz.vercel.app/Assets/PFP/kriz2.png"> 
 
   <meta property="twitter:card" content="summary_large_image">
   <meta property="twitter:url" content="https://kriz.vercel.app/">
-  <meta property="twitter:title" content="Krizxter.mp4">
+  <meta property="twitter:title" content="Krizxter.mp4 — Portfolio">
   <meta property="twitter:description" content="Hey, I'm Krizxter! A 17-year-old content creator, editor, and filmmaker based in New Delhi. View my latest cinematography, edits, and motion graphics.">
-  <meta property="twitter:image" content="https://kriz.vercel.app/Assets/PFP/kriz_circled.ico">
+  <meta property="twitter:image" content="https://kriz.vercel.app/Assets/PFP/kriz2.png">
 
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=EB+Garamond:ital,wght@1,400;1,500&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Poppins:ital,wght@1,200;1,300;1,500&display=swap" rel="stylesheet"/>
@@ -46,6 +45,15 @@
       overflow-x: hidden;
       cursor: crosshair;
       min-height: 100svh;
+    }
+
+    /* ── PRELOADER ── */
+    .preloader {
+      position: fixed; inset: 0; z-index: 99999;
+      background: var(--bg); display: flex; align-items: center; justify-content: center;
+      color: var(--white); font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(4rem, 10vw, 8rem); letter-spacing: 0.05em;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
 
     /* ── CUSTOM SCROLLBAR ── */
@@ -157,7 +165,12 @@
     /* ── HERO ── */
     #hero {
       min-height:100svh; display:flex; flex-direction:column; justify-content:flex-end; 
-      padding:2.5rem; padding-top:6rem; border-top:none;
+      padding:2.5rem; padding-top:6rem; border-top:none; position: relative;
+    }
+    /* Fixed overlapping issue: Added margin-bottom to push content away from the absolute scroll wheel */
+    .hero-content {
+      margin-bottom: clamp(5rem, 15vh, 8rem);
+      position: relative; z-index: 10;
     }
     .hero-meta {
       font-family:'EB Garamond',serif; font-style:italic; font-size:clamp(1rem, 2vw, 1.2rem); color:var(--dim);
@@ -168,7 +181,6 @@
       line-height:0.9; letter-spacing:0.01em; color:var(--white); display:block;
     }
     
-    /* HIGHLIGHTED INSTAGRAM BUTTON */
     .btn-glow {
       display: inline-flex; align-items: center; gap: 0.8rem; margin-top: 2rem;
       padding: clamp(0.7rem, 2vw, 0.85rem) clamp(1.4rem, 4vw, 1.8rem); 
@@ -186,7 +198,7 @@
     .scroll-cue {
       position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
       display:flex; flex-direction:column; align-items:center; gap:6px;
-      opacity:0.3; animation:bob 2.2s ease-in-out infinite;
+      opacity:0.3; animation:bob 2.2s ease-in-out infinite; z-index: 5;
     }
     .scroll-cue span { font-size:0.5rem; letter-spacing:0.22em; text-transform:uppercase; }
     .scroll-line { width:1px; height:36px; background:linear-gradient(to bottom,var(--white),transparent); }
@@ -300,7 +312,7 @@
     .video-meta { font-family:'Poppins',sans-serif; font-size:clamp(0.7rem, 1.5vw, 0.75rem); color:var(--dim); line-height:1.5; margin-bottom:0.8rem; }
     .video-tag { display:inline-block; padding:0.2rem 0.6rem; border:1px solid rgba(255,255,255,0.1); font-size:clamp(0.45rem, 1vw, 0.5rem); letter-spacing:0.18em; text-transform:uppercase; color:var(--faint); }
 
-    /* WIDE CARD: Restored to side-by-side */
+    /* WIDE CARD */
     .video-card.wide { grid-column: span 2; display:grid; grid-template-columns:1fr 1fr; }
     .video-card.wide .video-thumb { padding-bottom:0; height:100%; min-height:180px; }
     .video-card.wide .video-info { display:flex; flex-direction:column; justify-content:center; padding:1.8rem; }
@@ -363,8 +375,14 @@
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
+    
+    /* Delayed Hero Animations (Waits for preloader) */
     .fade-up { opacity:0; animation:fadeUp 0.9s ease forwards; }
-    .delay-1 { animation-delay:0.10s; } .delay-2 { animation-delay:0.28s; } .delay-3 { animation-delay:0.46s; } .delay-4 { animation-delay:0.64s; }
+    .delay-1 { animation-delay:1.1s; } 
+    .delay-2 { animation-delay:1.28s; } 
+    .delay-3 { animation-delay:1.46s; } 
+    .delay-4 { animation-delay:1.64s; }
+    
     .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.8s ease,transform 0.8s ease; }
     .reveal.visible { opacity:1; transform:translateY(0); }
 
@@ -386,11 +404,13 @@
       .video-grid { grid-template-columns:1fr; gap:1.5rem; }
       .review-grid { grid-template-columns:1fr; gap:1.5rem; }
       
-      .video-card.wide { grid-column:span 1; display:block; }
-      .video-card.wide .video-thumb { padding-bottom:56.25%; }
+      /* Reset Wide Card on Mobile to display normally */
+      .video-card.wide { grid-column:span 1; display: flex; flex-direction: column; }
+      .video-card.wide .video-thumb { padding-bottom:56.25%; height: auto; min-height: unset; position: relative; }
+      .video-card.wide .video-info { display: block; padding:1.5rem; }
 
-      #about { padding: 4rem 1.5rem 2rem; }
-      .frame { padding: 1.5rem 0; }
+      #about { padding: 4rem 1.5rem 2rem; min-height: unset; }
+      .frame { padding: 1.5rem 0; min-height: unset; }
       .content-row { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
       .avatar-wrap { width: 120px; height: 120px; }
       .bottom-row { align-items: flex-start; text-align: left; margin-top: 2rem; }
@@ -400,6 +420,8 @@
   </style>
 </head>
 <body>
+
+  <div id="preloader" class="preloader">OH HELLO!</div>
 
   <div class="cursor-blob" id="cursorBlob"></div>
 
@@ -444,7 +466,7 @@
   </div>
 
   <section id="hero">
-    <div>
+    <div class="hero-content">
       <p class="hero-meta fade-up delay-1">Portfolio</p>
       <span class="hero-title fade-up delay-2">Krizxter.mp4</span>
       
@@ -472,14 +494,14 @@
       <span class="ticker-item">Editor</span><span class="ticker-item">·</span>
       <span class="ticker-item">Cinematographer</span><span class="ticker-item">·</span>
       <span class="ticker-item accent">Portfolio</span><span class="ticker-item">·</span>
-      <span class="ticker-item">Goated Techie</span><span class="ticker-item">·</span>
-      <span class="ticker-item">Video</span><span class="ticker-item">·</span>
+      <span class="ticker-item">Techie</span><span class="ticker-item">·</span>
+      <span class="ticker-item">Videographer</span><span class="ticker-item">·</span>
       <span class="ticker-item accent">Krizxter.mp4</span><span class="ticker-item">·</span>
       <span class="ticker-item">Editor</span><span class="ticker-item">·</span>
       <span class="ticker-item">Cinematographer</span><span class="ticker-item">·</span>
       <span class="ticker-item accent">Portfolio</span><span class="ticker-item">·</span>
-      <span class="ticker-item">Goated Techie</span><span class="ticker-item">·</span>
-      <span class="ticker-item">Video</span><span class="ticker-item">·</span>
+      <span class="ticker-item">Techie</span><span class="ticker-item">·</span>
+      <span class="ticker-item">Videographer</span><span class="ticker-item">·</span>
     </div>
   </div>
 
@@ -492,12 +514,12 @@
     <div class="frame reveal">
       <div class="content-row">
         <div class="avatar-wrap reveal" style="transition-delay:0.1s">
-          <img src="/Assets/PFP/kriz2.png" alt="Kriz Profile" />
+          <img src="./Assets/PFP/kriz2.png" alt="Kriz Profile" />
         </div>
         <div class="bio-card reveal" style="transition-delay:0.2s">
           <p class="bio-greeting">Hi there!</p>
           <p class="bio-body">
-            I'm <strong>Kriz</strong>, a <strong>17-year-old content creator, editor, and filmmaker</strong> based in <strong>New Delhi, India</strong>, who blends creativity with technical skill to bring impactful ideas to life. Balancing my time as a student and a freelance creator, I jump into every stage of production — from <strong>directing and cinematography</strong> to <strong>advanced video editing</strong> — constantly refining my craft, exploring new workflows, and taking on fresh creative challenges. Driven by a passion for <strong>visual storytelling and technology</strong>, I love turning concepts into reality, so be sure to head over to my <strong>YouTube channel</strong> to see my latest work in action!
+            I'm <strong>Kriz</strong>, a <strong>17-year-old content creator, editor, and filmmaker</strong> based in <strong>New Delhi, India</strong>, who blends creativity with technical skill to bring impactful ideas to life. I have been working for the last <strong>3 years</strong> and collaborated with over <strong>40+ clients</strong>. Balancing my time as a student and a freelance creator, I jump into every stage of production — from <strong>directing and cinematography</strong> to <strong>advanced video editing</strong> — constantly refining my craft, exploring new workflows, and taking on fresh creative challenges. Driven by a passion for visual storytelling and technology, I love turning concepts into reality!
           </p>
         </div>
       </div>
@@ -535,7 +557,7 @@
       <div class="video-card reveal" data-category="cinematic" style="transition-delay:0.15s">
         <div class="video-thumb">
           <div class="custom-player" id="cinematic-player">
-            <video src="/Assets/Videos/NothingIndia.mp4" playsinline preload="metadata" poster="/Assets/thumb/NothingIndiaThumb.png"></video>
+            <video src="./Assets/Videos/NothingIndia.mp4" playsinline preload="metadata" poster="./Assets/thumb/NothingIndiaThumb.png"></video>
             <div class="player-overlay">
               <svg class="play-icon-big" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </div>
@@ -627,7 +649,7 @@
       <div class="video-card reveal" data-category="cinematic" style="transition-delay:0.15s">
         <div class="video-thumb">
           <div class="custom-player" id="cinematic-player">
-            <video src="/Assets/Videos/BirthdayMoGraph.mp4" playsinline preload="metadata" poster="/Assets/thumb/BirthdayThumb.jpg"></video>
+            <video src="./Assets/Videos/BirthdayMoGraph.mp4" playsinline preload="metadata" poster="./Assets/thumb/BirthdayThumb.jpg"></video>
             <div class="player-overlay">
               <svg class="play-icon-big" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
             </div>
@@ -672,28 +694,20 @@
     <div class="section-label reveal">Client Feedback</div>
     <div class="review-grid">
       
-      <div class="review-card reveal" style="transition-delay:0.1s">
-        <div>
-          <div class="stars">★★★★★</div>
-          <p class="review-text">"Kriz completely elevated our brand's visual identity. The edits were clean, cinematic, and delivered ahead of schedule."</p>
-        </div>
-        <div class="review-author">- Sarah J., Creative Director</div>
-      </div>
-
       <div class="review-card reveal" style="transition-delay:0.2s">
         <div>
           <div class="stars">★★★★★</div>
-          <p class="review-text">"An absolute prodigy. The way he handles motion and pacing in his videos is top tier. Highly recommend working with him."</p>
+          <p class="review-text">"bro left us wanting for more"</p>
         </div>
-        <div class="review-author">- Rahul M., Content Creator</div>
+        <div class="review-author">- NothingIndia, Instagram</div>
       </div>
-
-      <div class="review-card reveal" style="transition-delay:0.3s">
+      
+      <div class="review-card reveal" style="transition-delay:0.1s">
         <div>
           <div class="stars">★★★★★</div>
-          <p class="review-text">"Took our event footage and turned it into an absolute movie. The storytelling is incredible and the sound design blew me away!"</p>
+          <p class="review-text">"Very Nice!"</p>
         </div>
-        <div class="review-author">- Event Coordinator, TechFest</div>
+        <div class="review-author">- Diya, Manager (My homie)</div>
       </div>
 
     </div>
@@ -701,9 +715,9 @@
 
   <section id="contact">
     <div class="section-label reveal">Get In Touch</div>
-    <div class="contact-cta reveal">Let's make<br/>something<br/>unforgettable.</div>
+    <div class="contact-cta reveal">Let's make<br/>something<br/>goated.</div>
     <a href="mailto:hello@krizxter.mp4" class="contact-link reveal" style="transition-delay:0.2s">
-      hello@krizxter.mp4
+      Contact Krizxter
       <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
         <path d="M3 8h10M9 4l4 4-4 4"/>
       </svg>
@@ -717,6 +731,15 @@
   </footer>
 
   <script>
+    // Preloader Logic
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      setTimeout(() => {
+        preloader.style.opacity = '0';
+        preloader.style.visibility = 'hidden';
+      }, 600);
+    });
+
     // Cursor blob
     const blob = document.getElementById('cursorBlob');
     document.addEventListener('mousemove', e => {
@@ -751,11 +774,32 @@
       });
     });
 
-    // Filter tabs logic
+    // Filter tabs logic & Stopping videos on tab switch
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
+        // Stop all playing HTML5 videos
+        document.querySelectorAll('video').forEach(v => v.pause());
+        
+        // Reset Custom Player Play/Pause icons
+        document.querySelectorAll('.custom-player').forEach(p => {
+          p.classList.remove('playing');
+          const playIcon = p.querySelector('.icon-play');
+          const pauseIcon = p.querySelector('.icon-pause');
+          if(playIcon) playIcon.style.display = 'block';
+          if(pauseIcon) pauseIcon.style.display = 'none';
+        });
+
+        // Stop all YouTube Embeds by "reloading" their src attribute
+        document.querySelectorAll('.video-thumb iframe').forEach(iframe => {
+          let iframeSrc = iframe.src;
+          iframe.src = iframeSrc; 
+        });
+
+        // Switch Active Tab
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
+        
+        // Filter Grid
         const f = btn.dataset.filter;
         document.querySelectorAll('.video-card').forEach(card => {
           const match = f === 'all' || card.dataset.category === f;
@@ -814,6 +858,12 @@
               p.querySelector('.icon-play').style.display = 'block';
               p.querySelector('.icon-pause').style.display = 'none';
             }
+          });
+          
+          // Stop YouTube iframes if playing
+          document.querySelectorAll('.video-thumb iframe').forEach(iframe => {
+            let iframeSrc = iframe.src;
+            iframe.src = iframeSrc; 
           });
 
           video.play();
